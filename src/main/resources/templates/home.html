@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 꿈나무 - 나의 미래 찾기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #50E3C2;
+            --accent-color: #FF9500;
+            --background-color: #F8F9FA;
+            --text-color: #333333;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #FFFFFF;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo span {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style-type: none;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .auth-buttons button {
+            padding: 8px 15px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .login {
+            background-color: #FFFFFF;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .login:hover {
+            background-color: var(--primary-color);
+            color: #FFFFFF;
+        }
+
+        .signup {
+            background-color: var(--primary-color);
+            color: #FFFFFF;
+        }
+
+        .signup:hover {
+            background-color: #3A80D2;
+        }
+
+        .main-banner {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #FFFFFF;
+        }
+
+        .main-banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .main-banner p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.5s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .start-test {
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            background-color: var(--accent-color);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .start-test:hover {
+            background-color: #FF8000;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav ul {
+                flex-direction: column;
+                margin-top: 1rem;
+            }
+
+            nav ul li {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+            }
+
+            .auth-buttons {
+                margin-top: 1rem;
+            }
+
+            .main-banner h1 {
+                font-size: 2rem;
+            }
+
+            .main-banner p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <img src="logo.png" alt="AI 꿈나무 로고">
+        <span>AI 꿈나무</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="#">홈</a></li>
+            <li><a href="#">흥미 테스트</a></li>
+            <li><a href="#">진로 탐색</a></li>
+            <li><a href="#">나의 프로필</a></li>
+            <li><a href="#">도움말</a></li>
+        </ul>
+    </nav>
+    <div class="auth-buttons">
+        <button class="login">로그인</button>
+        <button class="signup">회원가입</button>
+    </div>
+</header>
+<main>
+    <div class="main-banner">
+        <h1>AI와 함께 발견하는 나만의 꿈!</h1>
+        <p>당신의 관심사와 능력을 분석해 미래의 직업을 제안해드려요.</p>
+        <button class="start-test">나의 흥미 찾기 시작!</button>
+    </div>
+</main>
+</body>
+</html>
