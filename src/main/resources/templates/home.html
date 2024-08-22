@@ -1,219 +1,120 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 꿈나무 - 나의 미래 찾기</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <title>AI 꿈나무 - 나만의 진로 찾기</title>
     <style>
-        :root {
-            --primary-color: #4A90E2;
-            --secondary-color: #50E3C2;
-            --accent-color: #FF9500;
-            --background-color: #F8F9FA;
-            --text-color: #333333;
-        }
-
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--background-color);
-            color: var(--text-color);
+            background: linear-gradient(135deg, #4A90E2, #50E3C2);
+            color: #333;
+            line-height: 1.6;
         }
-
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
-            background-color: #FFFFFF;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px 0;
         }
-
         .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        .logo span {
-            font-size: 1.2rem;
+            font-size: 24px;
             font-weight: bold;
-            color: var(--primary-color);
+            color: white;
         }
-
         nav ul {
             display: flex;
-            list-style-type: none;
+            list-style: none;
         }
-
         nav ul li {
-            margin-right: 20px;
+            margin-left: 20px;
         }
-
         nav ul li a {
+            color: white;
             text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: color 0.3s ease;
+            font-weight: bold;
         }
-
-        nav ul li a:hover {
-            color: var(--primary-color);
-        }
-
         .auth-buttons button {
-            padding: 8px 15px;
+            padding: 10px 20px;
             margin-left: 10px;
             border: none;
-            border-radius: 20px;
+            border-radius: 5px;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
         }
-
-        .login {
-            background-color: #FFFFFF;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-        }
-
-        .login:hover {
-            background-color: var(--primary-color);
-            color: #FFFFFF;
-        }
-
-        .signup {
-            background-color: var(--primary-color);
-            color: #FFFFFF;
-        }
-
-        .signup:hover {
-            background-color: #3A80D2;
-        }
-
-        .main-banner {
+        .login { background-color: transparent; color: white; border: 2px solid white; }
+        .signup { background-color: #FF9500; color: white; }
+        .hero {
             text-align: center;
-            padding: 5rem 2rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: #FFFFFF;
+            padding: 80px 0;
+            color: white;
         }
-
-        .main-banner h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .main-banner p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.5s;
-            opacity: 0;
-            animation-fill-mode: forwards;
-        }
-
-        .start-test {
-            padding: 12px 24px;
-            font-size: 1.2rem;
-            background-color: var(--accent-color);
-            color: #FFFFFF;
+        h1 { font-size: 48px; margin-bottom: 20px; }
+        .hero p { font-size: 20px; margin-bottom: 30px; }
+        .cta-button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #FF9500;
+            color: white;
             border: none;
-            border-radius: 30px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            animation: pulse 2s infinite;
         }
-
-        .start-test:hover {
-            background-color: #FF8000;
-            transform: scale(1.05);
+        .service-flow {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            margin-top: 40px;
         }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .service-flow h2 { color: #4A90E2; }
+        .service-flow ol {
+            padding-left: 20px;
         }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            nav ul {
-                flex-direction: column;
-                margin-top: 1rem;
-            }
-
-            nav ul li {
-                margin-right: 0;
-                margin-bottom: 0.5rem;
-            }
-
-            .auth-buttons {
-                margin-top: 1rem;
-            }
-
-            .main-banner h1 {
-                font-size: 2rem;
-            }
-
-            .main-banner p {
-                font-size: 1rem;
-            }
+        .service-flow li {
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-<header>
-    <div class="logo">
-        <img src="logo.png" alt="AI 꿈나무 로고">
-        <span>AI 꿈나무</span>
-    </div>
-    <nav>
-        <ul>
-            <li><a href="#">홈</a></li>
-            <li><a href="#">흥미 테스트</a></li>
-            <li><a href="#">진로 탐색</a></li>
-            <li><a href="#">나의 프로필</a></li>
-            <li><a href="#">도움말</a></li>
-        </ul>
-    </nav>
-    <div class="auth-buttons">
-        <button class="login">로그인</button>
-        <button class="signup">회원가입</button>
-    </div>
-</header>
-<main>
-    <div class="main-banner">
+<div class="container">
+    <header>
+        <div class="logo">AI 꿈나무</div>
+        <nav>
+            <ul>
+                <li><a th:href="@{/career-finder}">나의 진로 찾기</a></li>
+                <li><a th:href="@{/career-info}">진로 정보</a></li>
+                <li><a th:href="@{/profile}">나의 프로필</a></li>
+                <li><a th:href="@{/help}">도움말</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <button class="login" th:onclick="|location.href='@{/api/users/login}'|">로그인</button>
+            <button class="signup" th:onclick="|location.href='@{/api/users/signup}'|">회원가입</button>
+        </div>
+    </header>
+
+    <div class="hero">
         <h1>AI와 함께 발견하는 나만의 꿈!</h1>
         <p>당신의 관심사와 능력을 분석해 미래의 직업을 제안해드려요.</p>
-        <button class="start-test">나의 흥미 찾기 시작!</button>
+        <button class="cta-button" th:onclick="|location.href='@{/career-finder/start}'|">나의 진로 여정 시작하기</button>
+        <p>흥미 테스트부터 맞춤형 진로 추천까지, 한 번에 진행됩니다.</p>
     </div>
-</main>
+
+    <div class="service-flow">
+        <h2>AI 꿈나무와 함께하는 진로 찾기</h2>
+        <ol>
+            <li>흥미 및 적성 테스트 진행</li>
+            <li>AI 분석을 통한 결과 도출</li>
+            <li>맞춤형 진로 추천 받기</li>
+            <li>추천 진로에 대한 상세 정보 탐색</li>
+        </ol>
+    </div>
+</div>
 </body>
 </html>
