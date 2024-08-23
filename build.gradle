@@ -40,6 +40,7 @@ dependencies {
 	//Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE'
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

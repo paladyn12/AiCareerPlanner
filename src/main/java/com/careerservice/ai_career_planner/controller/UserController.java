@@ -1,8 +1,10 @@
 package com.careerservice.ai_career_planner.controller;
 
+import com.careerservice.ai_career_planner.domain.dto.user.UserLoginRequest;
 import com.careerservice.ai_career_planner.domain.dto.user.UserSignupRequest;
 import com.careerservice.ai_career_planner.domain.entity.User;
 import com.careerservice.ai_career_planner.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 @Slf4j
 public class UserController {
 
@@ -26,10 +28,23 @@ public class UserController {
         return "users/signup";
     }
     @PostMapping("/signup")
-    public ResponseEntity<User> signupUser(@ModelAttribute UserSignupRequest userSignupRequest) {
-        log.info("Post 요청");
-        User createdUser = userService.createUser(userSignupRequest);
-        return ResponseEntity.ok(createdUser);
+    public String signupUser(@ModelAttribute UserSignupRequest userSignupRequest, Model model) {
+        userService.createUser(userSignupRequest);
+        model.addAttribute("message", "회원가입에 성공했습니다.\n로그인 페이지로 이동합니다.");
+        model.addAttribute("nextUrl", "/users/login");
+        return "printMessage";
+    }
+
+    @GetMapping("/login")
+    public String loginPage(Model model, HttpServletRequest request) {
+
+        String uri = request.getHeader("Referer");
+        if (uri != null && !uri.contains("/login") && !uri.contains("/signup")) {
+            request.getSession().setAttribute("prevPage", uri);
+        } //로그인, 회원가입 페이지가 아닌 페이지의 uri를 세션에 저장해놓고 로그인 후 돌아갈 수 있도록 함
+
+        model.addAttribute("userLoginRequest", new UserLoginRequest());
+        return "users/login";
     }
 
     @GetMapping("/{loginId}")
