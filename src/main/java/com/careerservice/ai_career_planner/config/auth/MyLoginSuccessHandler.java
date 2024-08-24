@@ -26,7 +26,6 @@ public class MyLoginSuccessHandler implements AuthenticationSuccessHandler {
         HttpSession session = request.getSession();
         session.setMaxInactiveInterval(3600);
 
-        log.info("성공 핸들러 호출");
 
         User loginUser = userRepository.findByLoginId(auth.getName()).get();
 
