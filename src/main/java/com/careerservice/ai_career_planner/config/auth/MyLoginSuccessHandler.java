@@ -26,7 +26,6 @@ public class MyLoginSuccessHandler implements AuthenticationSuccessHandler {
         HttpSession session = request.getSession();
         session.setMaxInactiveInterval(3600);
 
-
         User loginUser = userRepository.findByLoginId(auth.getName()).get();
 
         // 성공 시 메세지 출력 후 홈 화면으로 redirect
