@@ -42,5 +42,4 @@ public class MyLoginSuccessHandler implements AuthenticationSuccessHandler {
         }
         pw.flush();
     }
-
 }
