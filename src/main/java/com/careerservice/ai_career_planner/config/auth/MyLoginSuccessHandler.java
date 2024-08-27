@@ -40,6 +40,7 @@ public class MyLoginSuccessHandler implements AuthenticationSuccessHandler {
             pw.println("<script>alert('" + loginUser.getName() + "님 반갑습니다!'); " +
                     "location.href='/';</script>");
         }
+
         pw.flush();
     }
 }
