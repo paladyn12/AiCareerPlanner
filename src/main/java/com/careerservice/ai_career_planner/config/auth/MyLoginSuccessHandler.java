@@ -27,9 +27,11 @@ public class MyLoginSuccessHandler implements AuthenticationSuccessHandler {
         session.setMaxInactiveInterval(3600);
 
         User loginUser = userRepository.findByLoginId(auth.getName()).get();
+        session.setAttribute("user", loginUser);
 
         // 성공 시 메세지 출력 후 홈 화면으로 redirect
-        response.setContentType("text/html");
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
         PrintWriter pw = response.getWriter();
 
         String prevPage = (String) request.getSession().getAttribute("prevPage");

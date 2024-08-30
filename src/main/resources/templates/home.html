@@ -87,15 +87,22 @@
         <div class="logo">AI 꿈나무</div>
         <nav>
             <ul>
-                <li><a th:href="@{/career-finder}">나의 진로 찾기</a></li>
-                <li><a th:href="@{/career-info}">진로 정보</a></li>
-                <li><a th:href="@{/profile}">나의 프로필</a></li>
+                <li><a th:href="@{/careers/info}">진로 정보</a></li>
+                <li><a th:href="@{/users/profile}">나의 프로필</a></li>
                 <li><a th:href="@{/help}">도움말</a></li>
             </ul>
         </nav>
         <div class="auth-buttons">
-            <button class="login" th:onclick="|location.href='@{/users/login}'|">로그인</button>
-            <button class="signup" th:onclick="|location.href='@{/users/signup}'|">회원가입</button>
+            <!-- 로그인하지 않은 경우 -->
+            <th:block th:unless="${session.user}">
+                <button class="login" th:onclick="|location.href='@{/users/login}'|">로그인</button>
+                <button class="signup" th:onclick="|location.href='@{/users/signup}'|">회원가입</button>
+            </th:block>
+            <!-- 로그인한 경우 -->
+            <th:block th:if="${session.user}">
+                <span th:text="${session.user.name + '님 환영합니다'}"></span>
+                <button class="logout" th:onclick="|location.href='@{/logout}'|">로그아웃</button>
+            </th:block>
         </div>
     </header>
 

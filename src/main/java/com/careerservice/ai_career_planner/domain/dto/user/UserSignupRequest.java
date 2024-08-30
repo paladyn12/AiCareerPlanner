@@ -1,6 +1,7 @@
 package com.careerservice.ai_career_planner.domain.dto.user;
 
 import com.careerservice.ai_career_planner.domain.entity.User;
+import com.careerservice.ai_career_planner.domain.enum_class.UserRole;
 import lombok.Data;
 
 @Data
@@ -17,6 +18,7 @@ public class UserSignupRequest {
                 .password(encodedPassword)
                 .email(email)
                 .name(name)
+                .userRole(UserRole.USER)
                 .build();
     }
 }

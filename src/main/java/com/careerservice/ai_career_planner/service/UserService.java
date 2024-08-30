@@ -6,6 +6,8 @@ import com.careerservice.ai_career_planner.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import java.util.Optional;
 
@@ -20,19 +22,29 @@ public class UserService {
         return userRepository.save(req.toEntity(encoder.encode(  req.getPassword()) ));
     }
 
-    public Optional<User> getUserByLoginId(String loginId) {
-        return userRepository.findByLoginId(loginId);
-    }
+    public BindingResult signupValid(UserSignupRequest req, BindingResult bindingResult) {
+        if(req.getLoginId().isEmpty()) {
+            bindingResult.addError(new FieldError("req", "loginId", "아이디가 비었습니다."));
+        } else if (userRepository.existsByLoginId(req.getLoginId())) {
+            bindingResult.addError(new FieldError("req", "loginId", "아이디가 중복됩니다."));
+        }
 
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
+        if (req.getPassword().isEmpty()) {
+            bindingResult.addError(new FieldError("req", "password", "비밀번호가 비어있습니다."));
+        } else if (!req.getPassword().equals(req.getPasswordCheck())) {
+            bindingResult.addError(new FieldError("req", "passwordCheck", "비밀번호가 일치하지 않습니다."));
+        }
 
-    public User updateUser(User user) {
-        return userRepository.save(user);
-    }
+        if (req.getEmail().isEmpty()) {
+            bindingResult.addError(new FieldError("req", "email", "이메일이 비어있습니다."));
+        }
 
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        if (req.getName().isEmpty()) {
+            bindingResult.addError(new FieldError("req", "name", "닉네임이 비어있습니다."));
+        } else if (req.getName().length()>10) {
+            bindingResult.addError(new FieldError("req", "name", "닉네임이 10자를 넘습니다."));
+        }
+
+        return bindingResult;
     }
 }

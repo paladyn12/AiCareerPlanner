@@ -5,11 +5,13 @@ import com.careerservice.ai_career_planner.domain.dto.user.UserSignupRequest;
 import com.careerservice.ai_career_planner.domain.entity.User;
 import com.careerservice.ai_career_planner.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -28,7 +30,10 @@ public class UserController {
         return "users/signup";
     }
     @PostMapping("/signup")
-    public String signupUser(@ModelAttribute UserSignupRequest userSignupRequest, Model model) {
+    public String signupUser(@Valid @ModelAttribute UserSignupRequest userSignupRequest, BindingResult bindingResult, Model model) {
+        if (userService.signupValid(userSignupRequest, bindingResult).hasErrors()){
+            return "users/signup";
+        }
         userService.createUser(userSignupRequest);
         model.addAttribute("message", "회원가입에 성공했습니다.\n로그인 페이지로 이동합니다.");
         model.addAttribute("nextUrl", "/users/login");
@@ -47,27 +52,8 @@ public class UserController {
         return "users/login";
     }
 
-    @GetMapping("/{loginId}")
-    public ResponseEntity<User> getUserByLoginId(@PathVariable String loginId) {
-        Optional<User> user = userService.getUserByLoginId(loginId);
-        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
-        Optional<User> user = userService.getUserByLoginId(userDetails.getLoginId());
-
-        if (user.isPresent() && user.get().getId().equals(id)) {
-            User updatedUser = userService.updateUser(userDetails);
-            return ResponseEntity.ok(updatedUser);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/profile")
+    public String profilePage() {
+        return "users/profile";
     }
 }

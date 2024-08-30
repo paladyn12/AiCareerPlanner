@@ -16,16 +16,20 @@ public class SecurityConfig {
 
     private final UserRepository userRepository;
 
+    //로그인 하지 않은 유저만 접근
+    private static final String[] anonymousUserUrl = {"/users/login", "/users/signup"};
+    //로그인 한 유저만 접근
+    private static final String[] authenticatedUserUrl = {"/users/profile"};
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                // 여기에 인증을 무시할 경로를 추가하세요.
-                .requestMatchers("/", "/home", "/**").permitAll()
-                // 모든 다른 요청은 인증 필요
-                .anyRequest().authenticated()
+                .requestMatchers(anonymousUserUrl).anonymous()
+                .requestMatchers(authenticatedUserUrl).authenticated()
+                .anyRequest().permitAll()
                 .and()
-                // 로그인 페이지 비활성화
+                // 로그인 페이지
                 .formLogin()
                 .loginPage("/users/login")                 // 로그인 페이지
                 .usernameParameter("loginId")
@@ -33,6 +37,10 @@ public class SecurityConfig {
                 .failureUrl("/users/login?fail") // 로그인 실패 시 redirect 될 URL => 실패 메세지 출력
                 .successHandler(new MyLoginSuccessHandler(userRepository))    // 로그인 성공 시 실행 될 Handler
                 // CSRF 비활성화 (개발 중일 경우)
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
                 .and()
                 .csrf().disable();
 

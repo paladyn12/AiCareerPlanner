@@ -1,5 +1,6 @@
 package com.careerservice.ai_career_planner.domain.entity;
 
+import com.careerservice.ai_career_planner.domain.enum_class.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,11 +33,6 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(name = "aptitude_test_results")
-    private String aptitudeTestResults;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "user_id")
-    private List<Portfolio> portfolios;
-
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
 }
