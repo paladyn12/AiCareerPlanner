@@ -33,4 +33,5 @@ public class CareerFinderService {
         return careerRepository.findAll();
     }
     // Add more methods as needed
+
 }
