@@ -14,7 +14,7 @@
             line-height: 1.6;
         }
         .container {
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
             padding: 40px 20px;
         }
@@ -23,40 +23,55 @@
             color: white;
             margin-bottom: 40px;
         }
-        h1 { font-size: 36px; margin-bottom: 10px; }
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
         .content-box {
             background-color: white;
             border-radius: 10px;
-            padding: 30px;
+            padding: 20px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         .input-section {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: bold;
         }
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
+        .input-block {
+            display: flex;
+            align-items: center;
             margin-bottom: 10px;
+        }
+        .input-block input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            margin-right: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 14px;
+        }
+        .remove-button {
+            cursor: pointer;
+            font-size: 18px;
+            color: #E94F4F;
+            border: none;
+            background: none;
+            margin-left: 8px;
         }
         .examples {
-            font-size: 14px;
+            font-size: 12px;
             color: #666;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         .submit-button {
             display: block;
-            width: 200px;
-            margin: 30px auto 0;
-            padding: 15px 30px;
-            font-size: 18px;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
             background-color: #FF9500;
             color: white;
             border: none;
@@ -67,6 +82,18 @@
         }
         .submit-button:hover {
             background-color: #E68500;
+        }
+        .add-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .add-button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -84,10 +111,9 @@
                 <div id="interests-container">
                     <div class="input-block">
                         <input type="text" name="interests" required>
-                        <span class="remove-button" onclick="removeBlock(this)">✘</span>
                     </div>
                 </div>
-                <button type="button" onclick="addBlock('interests-container')">블럭 추가</button>
+                <button type="button" class="add-button" onclick="addBlock('interests-container')">추가 작성</button>
                 <p class="examples">예시: 음악 감상, 요리, 프로그래밍, 운동, 독서, 그림 그리기</p>
             </div>
 
@@ -96,10 +122,9 @@
                 <div id="personalities-container">
                     <div class="input-block">
                         <input type="text" name="personalities" required>
-                        <span class="remove-button" onclick="removeBlock(this)">✘</span>
                     </div>
                 </div>
-                <button type="button" onclick="addBlock('personalities-container')">블럭 추가</button>
+                <button type="button" class="add-button" onclick="addBlock('personalities-container')">추가 작성</button>
                 <p class="examples">예시: 리더십, 분석력, 창의성, 섬세함, 의사소통 능력, 문제 해결 능력</p>
             </div>
 
@@ -108,10 +133,9 @@
                 <div id="subjects-container">
                     <div class="input-block">
                         <input type="text" name="subjects" required>
-                        <span class="remove-button" onclick="removeBlock(this)">✘</span>
                     </div>
                 </div>
-                <button type="button" onclick="addBlock('subjects-container')">블럭 추가</button>
+                <button type="button" class="add-button" onclick="addBlock('subjects-container')">추가 작성</button>
                 <p class="examples">예시: 수학, 과학, 국어, 영어, 사회, 음악, 미술, 체육</p>
             </div>
 
@@ -122,20 +146,16 @@
 </div>
 
 <script>
-
     function addBlock(containerId) {
-        // 컨테이너 선택
         var container = document.getElementById(containerId);
 
-        // 새로운 블럭 생성
         var newBlock = document.createElement('div');
         newBlock.className = 'input-block';
         newBlock.innerHTML = `
-                <input type="text" name="${containerId.replace('-container', '')}" required>
-                <span class="remove-button" onclick="removeBlock(this)">✘</span>
-            `;
+            <input type="text" name="${containerId.replace('-container', '')}" required>
+            <button type="button" class="remove-button" onclick="removeBlock(this)">X</button>
+        `;
 
-        // 컨테이너에 블럭 추가
         container.appendChild(newBlock);
     }
 
@@ -143,8 +163,6 @@
         var block = button.parentElement;
         block.remove();
     }
-
-
 </script>
 </body>
 </html>
