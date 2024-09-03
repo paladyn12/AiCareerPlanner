@@ -109,7 +109,16 @@
     <div class="hero">
         <h1>AI와 함께 발견하는 나만의 꿈!</h1>
         <p>당신의 관심사와 능력을 분석해 미래의 직업을 제안해드려요.</p>
-        <button class="cta-button" th:onclick="|location.href='@{/career-finder/start}'|">나의 진로 여정 시작하기</button>
+        <button class="cta-button"
+                th:if="${session.user}"
+                th:onclick="|location.href='@{/career/step1}'|">
+            나의 진로 여정 시작하기
+        </button>
+        <button class="cta-button"
+                th:unless="${session.user}"
+                onclick="alert('로그인이 필요합니다.');">
+            나의 진로 여정 시작하기
+        </button>
         <p>흥미 테스트부터 맞춤형 진로 추천까지, 한 번에 진행됩니다.</p>
     </div>
 

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 꿈나무 - 나의 관심사 입력</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #4A90E2, #50E3C2);
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        h1 { font-size: 36px; margin-bottom: 10px; }
+        .content-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .input-section {
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .examples {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .submit-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto 0;
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #FF9500;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #E68500;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>나의 관심사 입력하기</h1>
+        <p>여러분의 흥미, 적성, 좋아하는 과목을 알려주세요!</p>
+    </header>
+
+    <div class="content-box">
+        <form id="interestsForm" action="/career/final" method="POST">
+            <div class="input-section">
+                <label>나의 흥미 (최소 1개)</label>
+                <div id="interests-container">
+                    <div class="input-block">
+                        <input type="text" name="interests" required>
+                        <span class="remove-button" onclick="removeBlock(this)">✘</span>
+                    </div>
+                </div>
+                <button type="button" onclick="addBlock('interests-container')">블럭 추가</button>
+                <p class="examples">예시: 음악 감상, 요리, 프로그래밍, 운동, 독서, 그림 그리기</p>
+            </div>
+
+            <div class="input-section">
+                <label>나의 성격 (최소 1개)</label>
+                <div id="personalities-container">
+                    <div class="input-block">
+                        <input type="text" name="personalities" required>
+                        <span class="remove-button" onclick="removeBlock(this)">✘</span>
+                    </div>
+                </div>
+                <button type="button" onclick="addBlock('personalities-container')">블럭 추가</button>
+                <p class="examples">예시: 리더십, 분석력, 창의성, 섬세함, 의사소통 능력, 문제 해결 능력</p>
+            </div>
+
+            <div class="input-section">
+                <label>좋아하는 과목 (최소 1개)</label>
+                <div id="subjects-container">
+                    <div class="input-block">
+                        <input type="text" name="subjects" required>
+                        <span class="remove-button" onclick="removeBlock(this)">✘</span>
+                    </div>
+                </div>
+                <button type="button" onclick="addBlock('subjects-container')">블럭 추가</button>
+                <p class="examples">예시: 수학, 과학, 국어, 영어, 사회, 음악, 미술, 체육</p>
+            </div>
+
+            <input type="hidden" id="hollandCode" name="hollandCode" th:value="${hollandCode}">
+            <button type="submit" class="submit-button">제출하기</button>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    function addBlock(containerId) {
+        // 컨테이너 선택
+        var container = document.getElementById(containerId);
+
+        // 새로운 블럭 생성
+        var newBlock = document.createElement('div');
+        newBlock.className = 'input-block';
+        newBlock.innerHTML = `
+                <input type="text" name="${containerId.replace('-container', '')}" required>
+                <span class="remove-button" onclick="removeBlock(this)">✘</span>
+            `;
+
+        // 컨테이너에 블럭 추가
+        container.appendChild(newBlock);
+    }
+
+    function removeBlock(button) {
+        var block = button.parentElement;
+        block.remove();
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,39 +1,38 @@
 package com.careerservice.ai_career_planner.controller;
 
-import com.careerservice.ai_career_planner.domain.entity.Career;
-import com.careerservice.ai_career_planner.domain.entity.Survey;
-import com.careerservice.ai_career_planner.service.CareerFinderService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/careers")
+@RequestMapping("/career")
 public class CareerController {
 
-    private final CareerFinderService careerFinderService;
-
-    @GetMapping("/info")
-    public String careerInfoPage() {
-        return "careers/info";
+    @GetMapping("/step1")
+    public String careerFinderStep1Page() {
+        return "careers/careerFinderStep1";
     }
 
-    //설문 페이지를 만들어 설문조사 후 userId와 설문 결과를 제출
-    @PostMapping("/survey")
-    public Survey submitSurvey(@RequestParam Long userId,
-                               @RequestParam String interestsJson,
-                               @RequestParam String personalityJson) {
-        return careerFinderService.saveSurvey(userId, interestsJson, personalityJson);
+    @GetMapping("/step2/{hollandCode}")
+    public String careerFinderStep2Page(@PathVariable String hollandCode, Model model) {
+        model.addAttribute("hollandCode", hollandCode);
+        return "careers/careerFinderStep2";
     }
 
-    @GetMapping("/recommend")
-    public List<Career> getRecommendations(@RequestParam Long userId) {
-        return careerFinderService.recommendCareers(userId);
+    @PostMapping("/final")
+    public String careerFinderFinal(@RequestParam("interests") String[] interests,
+                                    @RequestParam("personalities") String[] personalities,
+                                    @RequestParam("subjects") String[] subjects,
+                                    @RequestParam("hollandCode") String hollandCode) {
+        // 관심사, 성격, 과목, Holland 코드 출력 (예제용)
+        System.out.println("Interests: " + String.join(", ", interests));
+        System.out.println("Personalities: " + String.join(", ", personalities));
+        System.out.println("Subjects: " + String.join(", ", subjects));
+        System.out.println("Holland Code: " + hollandCode);
+        return "redirect:/";
     }
 }

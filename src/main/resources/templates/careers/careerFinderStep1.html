@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 꿈나무 - 진로 탐색</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #4A90E2, #50E3C2);
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        h1 { font-size: 36px; margin-bottom: 10px; }
+        .content-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .notice {
+            background-color: #f8f8f8;
+            border-left: 4px solid #4A90E2;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .start-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #FF9500;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .start-button:hover {
+            background-color: #E68500;
+        }
+        .result-input {
+            margin-top: 30px;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+        .submit-code {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .submit-code:hover {
+            background-color: #3A80D2;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>AI 꿈나무 진로 탐색</h1>
+        <p>당신의 흥미와 적성을 발견하는 여정을 시작하세요!</p>
+    </header>
+
+    <div class="content-box">
+        <div class="notice">
+            <h3>검사 안내사항</h3>
+            <ul>
+                <li>이 검사는 약 1분 정도 소요됩니다.</li>
+                <li>[탐색 시작]을 누르고 보이는 6개의 유형 중 1순위와 2순위를 골라주세요.</li>
+                <li>검사 완료 후 받은 결과 코드를 입력해주세요.</li>
+            </ul>
+        </div>
+
+        <a href="https://www.work.go.kr/consltJobCarpa/jobPsyExamNew/popup/adult/popIntsOccpSchExam.do"
+           class="start-button"
+           target="_blank">흥미 탐색 시작하기</a>
+
+        <div class="result-input">
+            <p>흥미 탐색을 완료하셨나요? 결과 코드를 입력해 주세요.</p>
+            <input type="text" placeholder="결과 코드 입력 (ex. RI, SE,...)" id="result-code">
+            <button class="submit-code" onclick="submitResultCode()">다음으로</button>
+        </div>
+
+        <script>
+            function submitResultCode() {
+                var resultCode = document.getElementById('result-code').value;
+                if (resultCode) {
+                    window.location.href = '/career/step2/' + encodeURIComponent(resultCode);
+                } else {
+                    alert('결과 코드를 입력해 주세요.');
+                }
+            }
+        </script>
+    </div>
+</div>
+</body>
+</html>

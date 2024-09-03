@@ -33,6 +33,9 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private TestResult testResult;
+
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 }
