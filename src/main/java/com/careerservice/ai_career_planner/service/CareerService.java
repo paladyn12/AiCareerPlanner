@@ -42,6 +42,5 @@ public class CareerService {
             TestResult savedResult = testResultRepository.save(dto.toEntity());
             log.info("New result saved: {}", savedResult);
         }
-
     }
 }
