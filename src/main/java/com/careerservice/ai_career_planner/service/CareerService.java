@@ -23,6 +23,7 @@ public class CareerService {
 
     public void saveTestResult(String interests, String personalities, String subjects, String hollandCode) {
 
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String loginId = auth.getName();
 
