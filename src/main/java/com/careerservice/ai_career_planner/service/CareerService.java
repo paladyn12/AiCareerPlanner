@@ -43,4 +43,5 @@ public class CareerService {
             log.info("New result saved: {}", savedResult);
         }
     }
+
 }
