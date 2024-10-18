@@ -5,6 +5,7 @@ import com.careerservice.ai_career_planner.domain.dto.user.UserSignupRequest;
 import com.careerservice.ai_career_planner.domain.entity.User;
 import com.careerservice.ai_career_planner.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +54,10 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String profilePage() {
+    public String profilePage(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        log.info("User Name = {}", user.getName());
+        model.addAttribute("user", user);
         return "users/profile";
     }
 }
