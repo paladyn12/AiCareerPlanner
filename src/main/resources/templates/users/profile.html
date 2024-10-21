@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI 꿈나무 - 테스트 결과</title>
     <style>
+        /* 기존 스타일 유지 */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -24,10 +25,15 @@
             align-items: center;
             padding: 20px 0;
         }
-        .logo {
+        .logo-button {
             font-size: 24px;
             font-weight: bold;
             color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .logo-button:hover {
+            text-decoration: underline;
         }
         nav ul {
             display: flex;
@@ -65,38 +71,68 @@
             color: #4A90E2;
             margin-bottom: 30px;
         }
-        .result-section {
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
             margin-bottom: 30px;
-            padding: 25px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
         }
-        .result-title {
+        .result-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .result-box h3 {
             color: #4A90E2;
-            font-size: 20px;
-            margin-bottom: 15px;
+            margin: 0 0 15px 0;
             padding-bottom: 10px;
             border-bottom: 2px solid #E3F2FD;
         }
-        .result-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 15px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
         }
-        .result-label {
-            font-weight: bold;
-            color: #666;
-            margin-bottom: 8px;
-        }
-        .result-value {
-            color: #333;
+        .tag {
             background-color: #E3F2FD;
-            padding: 10px 15px;
-            border-radius: 5px;
+            color: #333;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .ai-recommendation {
+            background-color: #FFF3E0;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #FF9500;
+        }
+        .ai-recommendation h2 {
+            color: #FF9500;
+            margin-top: 0;
             margin-bottom: 15px;
-            display: inline-block;
+        }
+        .career-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .career-card {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .career-card h4 {
+            color: #4A90E2;
+            margin: 0 0 10px 0;
+        }
+        .career-card p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
         }
         .action-buttons {
             display: flex;
@@ -125,7 +161,7 @@
 <body>
 <div class="container">
     <header>
-        <div class="logo">AI 꿈나무</div>
+        <a href="/" class="logo-button">AI 꿈나무</a>
         <nav>
             <ul>
                 <li><a th:href="@{/users/profile}">나의 프로필</a></li>
@@ -144,35 +180,54 @@
             <p>검사를 통해 분석된 당신의 특성입니다.</p>
         </div>
 
-        <div class="result-section">
-            <h2 class="result-title">관심사 분야</h2>
-            <div class="result-content">
-                <div class="result-label">관심 있는 분야</div>
-                <div class="result-value" th:text="${session.user.testResult.interests}">관심사</div>
+        <div class="results-grid">
+            <div class="result-box">
+                <h3>관심사 분야</h3>
+                <div class="tag-container">
+                    <th:block th:each="interest : ${#strings.arraySplit(testResult.interests, ',')}">
+                        <span class="tag" th:text="${interest}">관심사</span>
+                    </th:block>
+                </div>
+            </div>
+
+            <div class="result-box">
+                <h3>성격 특성</h3>
+                <div class="tag-container">
+                    <th:block th:each="personality : ${#strings.arraySplit(testResult.personalities, ',')}">
+                        <span class="tag" th:text="${personality}">성격</span>
+                    </th:block>
+                </div>
+            </div>
+
+            <div class="result-box">
+                <h3>선호 과목</h3>
+                <div class="tag-container">
+                    <th:block th:each="subject : ${#strings.arraySplit(testResult.subjects, ',')}">
+                        <span class="tag" th:text="${subject}">과목</span>
+                    </th:block>
+                </div>
+            </div>
+
+            <div class="result-box">
+                <h3>홀랜드 유형</h3>
+                <div class="tag-container">
+                    <th:block th:each="code : ${#strings.arraySplit(testResult.hollandCode, ',')}">
+                        <span class="tag" th:text="${code}">홀랜드 코드</span>
+                    </th:block>
+                </div>
             </div>
         </div>
 
-        <div class="result-section">
-            <h2 class="result-title">성격 특성</h2>
-            <div class="result-content">
-                <div class="result-label">성격 유형</div>
-                <div class="result-value" th:text="${session.user.testResult.personalities}">성격 특성</div>
-            </div>
-        </div>
+        <div class="ai-recommendation">
+            <h2>AI 진로 추천</h2>
+            <p>검사 결과를 바탕으로 당신에게 가장 적합한 진로를 추천해드립니다.</p>
 
-        <div class="result-section">
-            <h2 class="result-title">선호 과목</h2>
-            <div class="result-content">
-                <div class="result-label">잘하고 좋아하는 과목</div>
-                <div class="result-value" th:text="${session.user.testResult.subjects}">선호 과목</div>
-            </div>
-        </div>
-
-        <div class="result-section">
-            <h2 class="result-title">홀랜드 유형</h2>
-            <div class="result-content">
-                <div class="result-label">직업 흥미 유형</div>
-                <div class="result-value" th:text="${session.user.testResult.hollandCode}">홀랜드 코드</div>
+            <div class="career-grid">
+                <div class="career-card" th:each="career : ${recommendedCareers}">
+                    <h4 th:text="${career.title}">추천 진로</h4>
+                    <p th:text="${career.description}">진로 설명</p>
+                    <p><strong>매칭 이유:</strong> <span th:text="${career.matchingReason}">매칭 이유 설명</span></p>
+                </div>
             </div>
         </div>
 
@@ -182,7 +237,6 @@
                 메인으로 돌아가기
             </button>
         </div>
-
     </div>
 </div>
 </body>

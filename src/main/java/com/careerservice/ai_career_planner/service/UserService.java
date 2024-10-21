@@ -1,11 +1,15 @@
 package com.careerservice.ai_career_planner.service;
 
+import com.careerservice.ai_career_planner.domain.dto.test_result.TestResultDTO;
 import com.careerservice.ai_career_planner.domain.dto.user.UserSignupRequest;
+import com.careerservice.ai_career_planner.domain.entity.TestResult;
 import com.careerservice.ai_career_planner.domain.entity.User;
+import com.careerservice.ai_career_planner.repository.TestResultRepository;
 import com.careerservice.ai_career_planner.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -13,9 +17,11 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
 
     private final UserRepository userRepository;
+    private final TestResultRepository testResultRepository;
     private final BCryptPasswordEncoder encoder;
 
     public User createUser(UserSignupRequest req) {
@@ -47,4 +53,12 @@ public class UserService {
 
         return bindingResult;
     }
+
+    public TestResultDTO getTestResultWithRecommendations(Long userId) {
+        TestResult testResult = testResultRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Test result not found"));
+
+        return TestResultDTO.from(testResult);
+    }
+
 }

@@ -1,21 +1,24 @@
 package com.careerservice.ai_career_planner.controller;
 
+import com.careerservice.ai_career_planner.domain.dto.test_result.TestResultDTO;
+import com.careerservice.ai_career_planner.domain.entity.CareerRecommendation;
 import com.careerservice.ai_career_planner.domain.dto.user.UserLoginRequest;
 import com.careerservice.ai_career_planner.domain.dto.user.UserSignupRequest;
+import com.careerservice.ai_career_planner.domain.entity.TestResult;
 import com.careerservice.ai_career_planner.domain.entity.User;
+import com.careerservice.ai_career_planner.service.OpenAIService;
 import com.careerservice.ai_career_planner.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -56,8 +59,11 @@ public class UserController {
     @GetMapping("/profile")
     public String profilePage(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
-        log.info("User Name = {}", user.getName());
+        TestResultDTO testResult = userService.getTestResultWithRecommendations(user.getId());
+
         model.addAttribute("user", user);
+        model.addAttribute("testResult", testResult);
+        model.addAttribute("recommendedCareers", testResult.getRecommendations());
         return "users/profile";
     }
 }

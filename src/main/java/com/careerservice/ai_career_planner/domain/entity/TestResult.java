@@ -3,6 +3,9 @@ package com.careerservice.ai_career_planner.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -25,4 +28,7 @@ public class TestResult {
     private String personalities;
     private String subjects;
     private String hollandCode;
+
+    @OneToMany(mappedBy = "testResult", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CareerRecommendation> recommendations = new ArrayList<>();
 }
