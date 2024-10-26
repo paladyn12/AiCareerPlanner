@@ -60,5 +60,4 @@ public class UserService {
 
         return TestResultDTO.from(testResult);
     }
-
 }
